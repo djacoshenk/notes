@@ -29,10 +29,6 @@ __How Does AJAX Work?__
 3. Open a request
 4. Send the request - send off the request to the web server
 
-* AJAX requests only work through a web server, which can be achieved by running a local server or uploading to a web server.
-* Web servers usually respond to AJAX requests with a simple text response - "form subbmitted!", "error!".
-* Two common data interchange formats are XML and JSON. JSON has become the most popular way to exchange data with AJAX.
-
 ```javascript
 var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function () { // create a call back function
@@ -43,6 +39,10 @@ xhr.onreadystatechange = function () { // create a call back function
 xhr.open('GET', 'sidebar.html'); // how to open a request
 xhr.send(); // how to send a request
 ```
+
+* AJAX requests only work through a web server, which can be achieved by running a local server or uploading to a web server.
+* Web servers usually respond to AJAX requests with a simple text response - "form subbmitted!", "error!".
+* Two common data interchange formats are XML and JSON. JSON has become the most popular way to exchange data with AJAX.
 
 __Get vs. Post__
 
