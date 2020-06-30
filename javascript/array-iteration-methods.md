@@ -20,7 +20,7 @@ names.forEach(name => {
   }
 });
 
-// logs a new array comprised of the elements which passed
+// output: ['Selma', 'Sam', 'Sharon']
 console.log(sNames);
 ```
 
@@ -33,7 +33,7 @@ let total = 0;
 // adds each element to the total price
 prices.forEach(price => total += price);
 
-// logs a value
+// output: 21.97
 console.log(total);
 ```
 
@@ -52,7 +52,7 @@ const names = ['Selma', 'Ted', 'Mike', 'Sam', 'Sharon', 'Marvin'];
 // all elements that pass are pushed to the variable
 const sNames = names.filter(name => name.includes('S'));
 
-// logs an array
+// output: ['Selma', 'Sam', 'Sharon'] 
 console.log(sNames);
 ```
 
@@ -64,7 +64,7 @@ const ten = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 // an array is created and made up of all the even numbers
 const even = ten.filter(number => number % 2 === 0);
 
-// logs an array
+// output: [2, 4, 6, 8, 10]
 console.log(even);
 ```
 
@@ -82,7 +82,7 @@ const a = [1, 4, 9, 16];
 // the function is applied to each element 
 const b = a.map(a => a * 2);
 
-// logs an array
+// output: [2, 8, 18, 32]
 console.log(b);
 ```
 
@@ -98,7 +98,7 @@ const user = [
 // nested objects in the array are accessed using dot notation
 const ageUser = user.map(user => user.age);
 
-// logs an array of the user ages
+// output: [27, 33, 42] 
 console.log(ageUser);
 ```
 
@@ -112,8 +112,11 @@ _.reduce() method to sum up the values in an array_
 
 ```javascript
 const prices = [6.75, 3.10, 4.00, 8.12];
+
+// sums up each value in the array
 let total = prices.reduce((a, b) => (a + b));
 
+// output: 6.75 + 3.10 + 4.00 + 8.12 = 21.97
 console.log(total);
 ```
 
@@ -130,6 +133,7 @@ const movies = [
 // this can also be easily achieved by usings the .flat() method
 const flatMovies = movies.reduce((a, b) => a.concat(b));
 
+// output: ['The Day the Earth Stood Still', 'Superman', 'Ghostbusters', 'Finding Dory', 'Jaws', 'On the Waterfront']
 console.log(flatMovies);
 ```
 
@@ -162,7 +166,7 @@ let gNames = names.map(name => name.includes('G') ? 1 : 0);
 // the .reduce() method sums up the elements of the new array
 let gTotal = gNames.reduce((a, b) => a + b);
 
-// logs a value rather than an array
+// output: 4
 console.log(gTotal);
 ```
 
@@ -175,6 +179,6 @@ const names = ['Gary', 'Pasan', 'Gabe', 'Treasure', 'Gengis', 'Gladys', 'Tony'];
 // the .map() method is then applied to create an array of objects
 const users = names.filter(name => name.includes('G')).map(name => ({name: name}));
 
-// logs an array
+// output: [{name: 'Gary'}, {name: 'Gabe'}, {name: 'Gengis'}, {name: 'Gladys'}]
 console.log(users);
 ```
