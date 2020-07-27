@@ -174,3 +174,173 @@ function outer() {
 const myNewFunction = outer();
 myNewFunction();
 ```
+
+- JavaScript is able to increment the value of `counter` because of closure.
+- When the function `incrementCounter` is returned after calling the function `counter`, a "backpack" is created where we can access the variable `counter`.
+- When can do this because of lexical scoping or closure.
+- Functions have the ability to "look out" beyond their local scope and store that information to its memory.
+
+_Asynchronous JavaScript_
+
+- JavaScript is:
+  - Single threaded (one command runs at a time).
+  - Synchronously executed (each line is run in order the code appears).
+- So what if we have a task:
+  - Accessing Twitter's server to get new tweets that takes a long time.
+  - Code we want to run using those tweets.
+
+_What if we try to delay a function directly using setTimeout?_
+
+```javascript
+function printHello() {
+  console.log('Hello');
+}
+
+setTimeout(printHello, 1000);
+console.log('Me first!');
+```
+
+In the console:
+
+1. 'Me first!'
+2. 'Hello'
+
+```javascript
+function printHello() {
+  console.log('Hello');
+}
+
+function blockFor1Sec() {
+  // blocks in the JavaScript thread for 1 sec
+}
+
+setTimeout(printHello, 0);
+
+blockFor1Sec();
+console.log('Me first!');
+```
+
+In the console:
+
+1. 1001ms - 'Me first!'
+2. 10002ms - 'Hello'
+
+- Callback Queue = browser
+- Call Stack = JavaScript global execution context
+- In order for functions to be popped off the Callback Queue and onto the Call Stack, the global execution context has to be done.
+- Call Stack must be empty.
+- You could have 1000 console logs in the global execution context before anything is popped off the Callback Queue.
+- The checking of the Call Stack against the Callback Queue is the Event Loop.
+
+```javascript
+function printHello() {
+  console.log('Hello');
+}
+
+function printHelloAgain() {
+  console.log('Hello Again');
+}
+
+function blockFor1Sec() {
+  setTimeout(printHelloAgain, 1000);
+  console.log('Block for 1 sec');
+}
+
+setTimeout(printHello, 1000);
+
+blockFor1Sec();
+console.log('Me First!');
+```
+
+In the console:
+
+1. 'Block for 1 sec'
+2. 'Me First!'
+3. 'Hello'
+4. 'Hello Again'
+
+- Even if we call a second `setTimeout` within the scope of a function, it gets added to the Callback Queue.
+- We can see the order of events since 'Hello' is printed before 'Hello Again'.
+
+_What happens if we change the setTimeout duration?_
+
+```javascript
+function printHello() {
+  console.log('Hello');
+}
+
+function printHelloAgain() {
+  console.log('Hello Again');
+}
+
+function blockFor1Sec() {
+  setTimeout(printHelloAgain, 0);
+  console.log('Block for 1 sec');
+}
+
+setTimeout(printHello, 1000);
+
+blockFor1Sec();
+console.log('Me First!');
+```
+
+In the console:
+
+1. 'Block for 1 sec'
+2. 'Me First!'
+3. 'Hello Again'
+4. 'Hello'
+
+- When we mess with the `setTimeout` duration, we change the order of events.
+- 'Hello Again' is printed before 'Hello' even though the `setTimeout` with the callback `printHello` was invoked first.
+- So what is happening in the Callback Queue?
+
+_JavaScript is not enough - We need new pieces (some of which aren't JavaScript at all_
+
+- Our core JavaScript engine has 3 main parts:
+  - Thread of execution
+  - Memory/variable environment
+  - Call stack
+- We need to add some new comments:
+  - Web Browser APIs/Node background APIs
+  - Promises
+  - Event loop, Callback/Task queue and micro task queue
+
+_What features does JavaScript use within the browser?_
+
+Web Browser + JavaScript
+
+- Developer tools
+- Web sockets
+- Network requests - `fetch` / `xhr`
+- Rendering - HTML DOM - `document`
+- Timer - `setTimeout`
+
+_ES5 Web Browser APIs with callback functions_
+
+Problems
+
+- Our response data is only available in the callback function - Callback hell.
+- Maybe it feels a little odd to think of passing a function into another function only for it to run much later.
+
+Benefits
+
+- Super explicit once you understand how it works under-the-hood.
+
+_ES6 Solution (Promises)_
+
+Using two-pronged 'facade' functions that both:
+
+- Initiate background web browser work and
+- Return a placeholder object (promise) immediately in JavaScript
+
+```javascript
+function display(data) {
+  console.log(data);
+}
+
+const futureData = fetch(`https://twitter.com/will/tweets/1`);
+futureData.then(display);
+
+console.log('Me first!');
+```
