@@ -331,8 +331,9 @@ _ES6 Solution (Promises)_
 
 Using two-pronged 'facade' functions that both:
 
-- Initiate background web browser work and
+- Initiate background web browser work
 - Return a placeholder object (promise) immediately in JavaScript
+- A promise is an object with hidden properties
 
 ```javascript
 function display(data) {
@@ -344,3 +345,31 @@ futureData.then(display);
 
 console.log('Me first!');
 ```
+
+_then method and functionality to call on completion_
+
+- Any code we want to run on the returned data must also be saed on the promise object
+- Added using `.then` method to the hidden property `onFulfillment`
+- Promise objects will automatically trigger the attached function to run (with its input being the returned data)
+
+_We have rules for the execution of our asynchronously delayed code_
+
+- Hold promise-deferred functions in a microtask queue and callback function in a task queue (Callback Queue) when the Web Browser (API) finishes
+- Add the function to the Call Stack (i.e. run the function) when:
+  - Call Stack is empty & all global code run (Have the Event Loop check this condition)
+- Prioritize functions in the microtask queue over the Callback Queue
+
+_Promises, Web APIs, the Callback & Microtask Queues and Event Loop enable_
+
+- Non-blocking applications: This means we don't have to wait in the single thread and don't block further code from running
+- However long it takes: We cannot predict when our Browser feature's work will finish so we let JS handle automatically running the funciton on its completion
+- Web applications: Asynchronous JS is the backbone of the modern web letting us build fast 'non-blocking' applications
+
+_Classes, Prototypes - OOP JS_
+
+- An enormously popular paradigm for structuring our complex code
+- Prototype chain - the feature behind-the-scenes that enables emulation of OOP but is a compelling tool in itself
+- Understanding the difference between `_proto_` and prototype
+- The new and class keywords as tools to automate our object & method creation
+
+- We don't want to use arrow functions for our methods on objects because of the `this` keyword which is lexically binded.
